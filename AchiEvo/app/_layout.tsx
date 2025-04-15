@@ -16,6 +16,17 @@ export default function RootLayout() {
             color: '#1E90FF' // Синий цвет как в AchiEvo
           },      
         }}
+        
+      />
+        <Stack.Screen 
+        name="topic"
+        options={{ 
+          title: 'Topic',
+          headerTitleStyle: {
+            color: '#1E90FF' // Синий цвет как в AchiEvo
+          },
+        }}
+        
       />
     </Stack>
   );

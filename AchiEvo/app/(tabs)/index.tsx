@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 
 export default function HomeScreen() {
@@ -25,7 +25,7 @@ export default function HomeScreen() {
       </View>
         <ScrollView style={styles.themesContainer}>
           {themes.map((theme) => (
-            <TouchableOpacity key={theme.id} style={styles.themeItem} onPress={() => console.log("Переход в тематику:", theme.name)}>
+            <TouchableOpacity key={theme.id} style={styles.themeItem} onPress={() => router.push(`/topic?name=${theme.name}`)}>
               <Text style={styles.themeText}>{theme.name}</Text>
             </TouchableOpacity>
           ))}
