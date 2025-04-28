@@ -1,22 +1,11 @@
+import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Link, router } from 'expo-router';
+import { useTopics } from '../../context/TopicContext'
 
 
 export default function HomeScreen() {
-
-  const themes = [
-    { id: 1, name: 'Программирование' },
-    { id: 2, name: 'Английский язык' },
-    { id: 3, name: 'Спорт' },
-    { id: 4, name: 'Рисование' },
-    { id: 5, name: 'Бег' },
-    { id: 6, name: 'База данных' },
-    { id: 7, name: 'Футбол' },
-    { id: 8, name: 'Турники' },
-    { id: 9, name: 'Стартапы' },
-    { id: 10, name: 'Кулинария' },
-
-  ];
+  const {topics} = useTopics();
 
   return (
     <View style={styles.container}>
@@ -24,9 +13,9 @@ export default function HomeScreen() {
         <Text style={styles.title}>AchiEvo</Text>
       </View>
         <ScrollView style={styles.themesContainer}>
-          {themes.map((theme) => (
-            <TouchableOpacity key={theme.id} style={styles.themeItem} onPress={() => router.push(`/topic?name=${theme.name}`)}>
-              <Text style={styles.themeText}>{theme.name}</Text>
+          {topics.map((topic) => (
+            <TouchableOpacity key={topic.id} style={styles.themeItem} onPress={() => router.push(`/topic?name=${topic.name}`)}>
+              <Text style={styles.themeText}>{topic.name}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -73,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     alignItems: 'center',
-    marginBottom: 30
+    marginBottom: 80
   },
   addButtonText: {
     color: '#fff',

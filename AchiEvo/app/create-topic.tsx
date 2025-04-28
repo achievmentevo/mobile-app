@@ -1,15 +1,25 @@
 import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import { useLocalSearchParams } from 'expo-router';
+import { useTopics } from '..//context/TopicContext'
+
 
 
 
 export default function CreateThemeScreen() {
   const router = useRouter();
+  const params = useLocalSearchParams();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
+
+  const {addTopic} = useTopics();
+
   const handleCreate = () => {
+    if (title.trim()) {
+      addTopic(title.trim());
+    }
     router.back()
   }
 
