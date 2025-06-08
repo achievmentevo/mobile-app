@@ -89,7 +89,7 @@ export default function TopicTimer() {
         let interval: NodeJS.Timeout;
         if (isRunning) {
             interval = setInterval(() => {
-                setTime(prev => prev + 1000000)
+                setTime(prev => prev + 1)
             }, 1000)
         }
         return () => clearInterval(interval);
