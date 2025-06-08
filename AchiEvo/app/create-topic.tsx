@@ -1,107 +1,125 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { useRouter } from "expo-router";
-import { useLocalSearchParams } from 'expo-router';
-import { useTopics } from '..//context/TopicContext'
-
-
-
+import { useTopics } from '../context/TopicContext';
 
 export default function CreateThemeScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-
-
-  const {addTopic} = useTopics();
+  const { addTopic } = useTopics();
 
   const handleCreate = () => {
     if (title.trim()) {
       addTopic(title.trim());
+      router.back();
     }
-    router.back()
-  }
+  };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Название темы"
-        value={title}
-        onChangeText={setTitle}
-        placeholderTextColor="#999"
-      />
-      
-      <TextInput
-        style={[styles.input, { height: 100 }]}
-        placeholder="Описание"
-        value={description}
-        onChangeText={setDescription}
-        multiline
-        placeholderTextColor="#999"
-      />
-      
-      <TouchableOpacity 
-        style={styles.createButton}
-        onPress={handleCreate}
+    <SafeAreaView style={styles.safe}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={styles.container}
       >
-        <Text style={styles.createButtonText}>Создать</Text>
-      </TouchableOpacity>
-      
-      <TouchableOpacity 
-        style={styles.cancelButton}
-        onPress={() => router.back()}
-      >
-        <Text style={styles.cancelButtonText}>Отмена</Text>
-      </TouchableOpacity>
-    </View>
+        <Text style={styles.header}>Создание тематики</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Название темы"
+          value={title}
+          onChangeText={setTitle}
+          placeholderTextColor="#999"
+        />
+
+        <TextInput
+          style={[styles.input, styles.textArea]}
+          placeholder="Описание (необязательно)"
+          value={description}
+          onChangeText={setDescription}
+          multiline
+          placeholderTextColor="#999"
+        />
+
+        <TouchableOpacity
+          style={[styles.button, styles.primaryButton]}
+          onPress={handleCreate}
+        >
+          <Text style={styles.primaryText}>Создать</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, styles.outlineButton]}
+          onPress={() => router.back()}
+        >
+          <Text style={styles.outlineText}>Отмена</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: '#F2F6FC',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     padding: 20,
+    justifyContent: 'flex-start',
   },
-  title: {
-    fontSize: 28,
+  header: {
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#1E90FF',
     textAlign: 'center',
-    marginVertical: 20,
+    marginBottom: 30,
   },
   input: {
-    borderWidth: 2,
-    borderColor: '#1E90FF',
+    backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 15,
-    marginBottom: 20,
+    padding: 16,
     fontSize: 16,
+    borderColor: '#1E90FF',
+    borderWidth: 1.5,
+    marginBottom: 20,
     color: '#333',
   },
-  createButton: {
-    backgroundColor: '#1E90FF',
-    borderRadius: 10,
+  textArea: {
+    height: 100,
+    textAlignVertical: 'top',
+  },
+  button: {
     padding: 15,
+    borderRadius: 10,
     alignItems: 'center',
     marginBottom: 15,
   },
-  createButtonText: {
+  primaryButton: {
+    backgroundColor: '#1E90FF',
+  },
+  primaryText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16,
   },
-  cancelButton: {
-    borderWidth: 2,
+  outlineButton: {
+    borderWidth: 1.5,
     borderColor: '#1E90FF',
-    borderRadius: 10,
-    padding: 15,
-    alignItems: 'center',
+    backgroundColor: '#fff',
   },
-  cancelButtonText: {
+  outlineText: {
     color: '#1E90FF',
     fontWeight: 'bold',
     fontSize: 16,

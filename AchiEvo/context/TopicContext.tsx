@@ -35,7 +35,7 @@ export const TopicProvider = ({ children }: { children: React.ReactNode }) => {
       const newTopic = { id: Date.now(), name };
       const updatedTopics = [...topics, newTopic];
       setThemes(updatedTopics);
-      await AsyncStorage.setItem('@themes', JSON.stringify(updatedTopics));
+      await AsyncStorage.setItem('@topics', JSON.stringify(updatedTopics));
     };
   
     return (
